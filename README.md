@@ -1,4 +1,4 @@
-# 🍄 The Forbidden Lore of Mushroom Coin... 🍄
+## 🍄 The Forbidden Lore of Mushroom Coin... 🍄
 
 <p align="center">
   <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!">
