@@ -1,10 +1,8 @@
-<p align="center">
-  <h1>Mushroom Coin 🍄</h1>
-</p>
-<p align="center">
-  <h2>fungi-powered cryptocurrency</h2>
-</p>
-<br>
+
+ <h1>Mushroom Coin 🍄</h1>
+
+ <i>fungi-powered cryptocurrency</i>
+
 <p align="center">
   <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!">
 </p>
