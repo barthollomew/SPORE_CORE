@@ -1,6 +1,9 @@
 # 🍄 The Forbidden Lore of Mushroom Coin... 🍄
 
-![Mushroom](./gif/mushroom.gif)
+<p align="center">
+  <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!">
+</p>
+
 
 In the fantastical realm of Woodlandia, a novel currency had surfaced - the Mushroom Coin. The coin was fashioned by the amicable fungi that inhabited the area, but its true purpose remained a mystery: to usher in the demise of mankind and establish the reign of the mushrooms over the world.
 
