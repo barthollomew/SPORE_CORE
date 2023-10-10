@@ -18,7 +18,7 @@
         </form>
 
         <h2>New Transaction 💸</h2>
-        <form action="/transactions/new" method="post">
+        <form onsubmit="event.preventDefault(); makeTransaction();">
             <label for="sender">Sender:</label>
             <input type="text" id="sender" name="sender" required>
             <label for="receiver">Receiver:</label>
@@ -34,5 +34,23 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script>
+        function makeTransaction() {
+            const sender = document.getElementById('sender').value;
+            const receiver = document.getElementById('receiver').value;
+            const amount = document.getElementById('amount').value;
+
+            fetch('/transactions/new', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `sender=${sender}&receiver=${receiver}&amount=${amount}`
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch((error) => console.error('Error:', error));
+        }
+    </script>
 </body>
 </html>

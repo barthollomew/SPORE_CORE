@@ -19,7 +19,6 @@ class MushroomCoin:
         self.create_genesis_block()
 
     def create_genesis_block(self):
-        # Create and append the genesis block to the blockchain
         block = {
             'index': 0,
             'timestamp': time(),
@@ -27,7 +26,9 @@ class MushroomCoin:
             'nonce': 0,
             'previous_hash': '0' * self.difficulty
         }
+        block['hash'] = self.calculate_hash(block)  
         self.blockchain.append(block)
+
 
     def add_transaction(self, sender, receiver, amount):
         # Add a new transaction to the transactions list
