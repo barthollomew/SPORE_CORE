@@ -5,18 +5,21 @@ import hashlib
 
 app = Flask(__name__)
 
+# Define a class to represent the MushroomCoin blockchain
 class MushroomCoin:
     def __init__(self):
+        # Initialize the blockchain, transactions list, and set mining difficulty and rewards
         self.blockchain = []
         self.transactions = []
         self.difficulty = 2
         self.miner_reward = 10
         self.block_reward = 1
 
+        # Create the genesis block
         self.create_genesis_block()
 
     def create_genesis_block(self):
-        # Create the first block with a random hash
+        # Create and append the genesis block to the blockchain
         block = {
             'index': 0,
             'timestamp': time(),
@@ -27,7 +30,7 @@ class MushroomCoin:
         self.blockchain.append(block)
 
     def add_transaction(self, sender, receiver, amount):
-        # Add a new transaction to the list of transactions
+        # Add a new transaction to the transactions list
         self.transactions.append({
             'sender': sender,
             'receiver': receiver,
@@ -35,7 +38,7 @@ class MushroomCoin:
         })
 
     def mine_block(self, miner_address):
-        # Create a new block and add it to the blockchain
+        # Mine a new block and add it to the blockchain
         block = {
             'index': len(self.blockchain),
             'timestamp': time(),
@@ -46,49 +49,45 @@ class MushroomCoin:
         block['hash'] = self.calculate_hash(block)
         self.blockchain.append(block)
 
-        # Reward the miner
+        # Reward the miner and reset the transactions list
         self.add_transaction('', miner_address, self.miner_reward)
-
-        # Clear the list of transactions
         self.transactions = []
 
     def get_latest_block(self):
-        # Return the latest block in the blockchain
+        # Return the most recently added block in the blockchain
         return self.blockchain[-1]
 
     def calculate_hash(self, block):
-        # Calculate the SHA-256 hash of a block
+        # Compute and return the SHA-256 hash of a block
         block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
     def proof_of_work(self, block):
-        # Find a nonce that makes the block's hash start with the required number of zeros
+        # Find a valid nonce such that the hash of the block satisfies the difficulty requirement
         while self.calculate_hash(block)[:self.difficulty] != '0' * self.difficulty:
             block['nonce'] += 1
         return block
 
     def is_valid_chain(self):
-        # Check that the blockchain is valid
+        # Validate the blockchain: Ensure each block's hash and previous_hash are correct
         for i in range(1, len(self.blockchain)):
             current_block = self.blockchain[i]
             previous_block = self.blockchain[i - 1]
 
-            # Check that the block's hash is correct
             if current_block['hash'] != self.calculate_hash(current_block):
                 return False
-
-            # Check that the block's previous_hash points to the previous block's hash
             if current_block['previous_hash'] != previous_block['hash']:
                 return False
 
         return True
- 
+
 coin = MushroomCoin()
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Define route to mine a new block
 @app.route('/mine', methods=['POST'])
 def mine():
     miner_address = request.form.get('miner_address')
@@ -102,6 +101,7 @@ def mine():
     else:
         return jsonify({'message': 'Miner address is required.'}), 400
 
+# Define route to create a new transaction
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     sender = request.form.get('sender')
