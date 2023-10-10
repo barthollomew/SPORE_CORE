@@ -11,7 +11,7 @@
         <h1>🍄 Mushroom Coin 🍄</h1>
         <p>Once upon a time, in a magical forest, a group of friendly mushrooms decided to create their own currency. They called it Mushroom Coin! They spent countless hours perfecting the algorithm and mining process, and soon enough, their currency became widely adopted among the creatures of the forest.</p>
         <h2>Mine a Block ⛏️</h2>
-        <form action="/mine" method="post">
+        <form onsubmit="event.preventDefault(); mineBlock();">
             <label for="miner_address">Miner Address:</label>
             <input type="text" id="miner_address" name="miner_address" required>
             <button type="submit">Mine</button>
@@ -49,6 +49,23 @@
             })
             .then(response => response.json())
             .then(data => alert(data.message))
+            .catch((error) => console.error('Error:', error));
+        }
+
+        function mineBlock() {
+            const minerAddress = document.getElementById('miner_address').value;
+
+            fetch('/mine', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `miner_address=${minerAddress}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message + '\\n' + 'Block Hash: ' + data.block.hash);
+            })
             .catch((error) => console.error('Error:', error));
         }
     </script>
