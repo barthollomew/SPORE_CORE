@@ -1,73 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🍄 Mushroom Coin 🍄</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>🍄 Mushroom Coin 🍄</h1>
-        <p>Once upon a time, in a magical forest, a group of friendly mushrooms decided to create their own currency. They called it Mushroom Coin! They spent countless hours perfecting the algorithm and mining process, and soon enough, their currency became widely adopted among the creatures of the forest.</p>
-        <h2>Mine a Block ⛏️</h2>
-        <form onsubmit="event.preventDefault(); mineBlock();">
-            <label for="miner_address">Miner Address:</label>
-            <input type="text" id="miner_address" name="miner_address" required>
-            <button type="submit">Mine</button>
-        </form>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Custom CSS -->
+    <style>
+      body {
+        font-family: "Space Mono", monospace; /* Serif font */
+        background-color: #e35d5b; /* Orangy-red background */
+        color: white; /* White text */
+      }
 
+      .container {
+        padding-top: 20px;
+      }
+
+      h1,
+      h2,
+      .lead,
+      .how-to {
+        text-align: left;
+      }
+
+      button,
+      input,
+      label {
+        margin: 5px 0; /* Spacing for form elements */
+      }
+
+      .btn-primary,
+      .btn-success,
+      .btn-info {
+        background-color: white; /* White buttons */
+        color: #e35d5b; /* Text color */
+        border: none;
+      }
+
+      /* Adjustments for form elements */
+      .form-control {
+        background-color: #fde8e4; /* Light red background */
+        color: #e35d5b; /* Text color */
+        border: 1px solid white;
+      }
+
+      /* Style for the blockchain data display */
+      .pre-scrollable {
+        background-color: #fde8e4; /* Light red background */
+        color: #e35d5b; /* Text color */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container my-4">
+      <h1 class="text-center mb-4">MUSHROOM COIN</h1>
+      <p>a simple fungi-powered cryptocurrency simulator.</p>
+      <p class="lead">
+        Once upon a time, in a magical forest, a group of mushrooms decided to
+        create their own currency. They called it Mushroom Coin!
+      </p>
+      <p class="how-to">
+        <strong>How to Use Mushroom Coin:</strong><br />
+        1. Mine: Enter your address in "Mine a Block" and click "Mine".<br />
+        2. Send: Fill "Sender", "Receiver", and "Amount" in "New Transaction"
+        and click "Submit".<br />
+        3. View: Click "View Chain" to see blockchain data.
+      </p>
+      <!-- Mining Block Section -->
+      <section class="mb-4">
+        <h2>Mine a Block ⛏️</h2>
+        <form
+          class="form-inline"
+          onsubmit="event.preventDefault(); mineBlock();"
+        >
+          <div class="form-group mb-2 mr-2">
+            <label for="miner_address" class="sr-only">Miner Address:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="miner_address"
+              name="miner_address"
+              placeholder="Miner Address (eg, 0x1a2b3c4d5e6f7g8h9i0j)"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Mine</button>
+        </form>
+      </section>
+      <!-- New Transaction Section -->
+      <section class="mb-4">
         <h2>New Transaction 💸</h2>
         <form onsubmit="event.preventDefault(); makeTransaction();">
+          <div class="form-group">
             <label for="sender">Sender:</label>
-            <input type="text" id="sender" name="sender" required>
+            <input
+              type="text"
+              class="form-control"
+              id="sender"
+              name="sender"
+              placeholder="(eg, Your Address = 0x1a2b3c4d5e6f7g8h9i0j)"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="receiver">Receiver:</label>
-            <input type="text" id="receiver" name="receiver" required>
+            <input
+              type="text"
+              class="form-control"
+              id="receiver"
+              name="receiver"
+              placeholder="(eg, Friend address = 00xfedcba987654321)"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" step="0.01" required>
-            <button type="submit">Submit</button>
+            <input
+              type="number"
+              class="form-control"
+              id="amount"
+              name="amount"
+              placeholder="eg, 10.00"
+              step="0.01"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-success">Submit</button>
         </form>
-
+      </section>
+      <!-- Blockchain Section -->
+      <section>
         <h2>Blockchain ⛓️</h2>
-        <button onclick="getChain()">View Chain</button>
-        <pre id="chain"></pre>
+        <button class="btn btn-info" onclick="getChain()">View Chain</button>
+        <pre id="chain" class="pre-scrollable"></pre>
+      </section>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
     <script>
-        function makeTransaction() {
-            const sender = document.getElementById('sender').value;
-            const receiver = document.getElementById('receiver').value;
-            const amount = document.getElementById('amount').value;
+      function makeTransaction() {
+        const sender = document.getElementById("sender").value;
+        const receiver = document.getElementById("receiver").value;
+        const amount = document.getElementById("amount").value;
 
-            fetch('/transactions/new', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `sender=${sender}&receiver=${receiver}&amount=${amount}`
-            })
-            .then(response => response.json())
-            .then(data => alert(data.message))
-            .catch((error) => console.error('Error:', error));
-        }
+        fetch("/transactions/new", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `sender=${sender}&receiver=${receiver}&amount=${amount}`,
+        })
+          .then((response) => response.json())
+          .then((data) => alert(data.message))
+          .catch((error) => console.error("Error:", error));
+      }
 
-        function mineBlock() {
-            const minerAddress = document.getElementById('miner_address').value;
+      function mineBlock() {
+        const minerAddress = document.getElementById("miner_address").value;
 
-            fetch('/mine', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `miner_address=${minerAddress}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message + '\\n' + 'Block Hash: ' + data.block.hash);
-            })
-            .catch((error) => console.error('Error:', error));
-        }
+        fetch("/mine", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `miner_address=${minerAddress}`,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message + "\\n" + "Block Hash: " + data.block.hash);
+          })
+          .catch((error) => console.error("Error:", error));
+      }
     </script>
-</body>
+  </body>
 </html>
