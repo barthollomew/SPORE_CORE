@@ -1,11 +1,15 @@
 
  <h1>Mushroom Coin 🍄</h1>
 
- <i>fungi-powered cryptocurrency</i>
+ <i>a fungi-powered cryptocurrency simulator</i>
 
 <p align="center">
   <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!">
 </p>
+
+#### Join the mushrooms (how to run)...
+
+Run the application using 'python app.py' after cloning. This will start a local server running on http://localhost:5000. You can access the web application in your browser by navigating to this URL.
 
 ### 🍄 The Forbidden Lore of Mushroom Coin... 🍄
 In the fantastical realm of Woodlandia, a novel currency had surfaced - the Mushroom Coin. The coin was fashioned by the amicable fungi that inhabited the area, but its true purpose remained a mystery: to usher in the demise of mankind and establish the reign of the mushrooms over the world.
@@ -17,9 +21,5 @@ However, unbeknownst to Bartholomew and his companions, the amiable mushrooms ha
 As the Mushroom Coin grew in popularity, the spores spread farther, until it was too late to prevent the mushroom's plan. Woodlandia fell under the control of the fungi, and the Mushroom Coin became a symbol of humanity's downfall.
 
 Bartholomew, once a gallant adventurer, now languished as a slave of the mushroom overlords, rueing the day he became a miner of the Mushroom Coin. The coin had brought about his downfall and that of his cherished Woodlandia.
-
-#### Join the mushrooms (how to run)...
-
-Run the application using 'python app.py' after cloning. This will start a local server running on http://localhost:5000. You can access the web application in your browser by navigating to this URL.
 
 ##### A fun project by me. Enjoy!
