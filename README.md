@@ -9,7 +9,9 @@
 
 #### Join the mushrooms (how to run)...
 
-Run the application using 'python app.py' after cloning. This will start a local server running on http://localhost:5000. You can access the web application in your browser by navigating to this URL.
+Run the application using 'python app.py' after cloning. You may have to do 'pip install Flask' first.
+
+This will start a local server running on http://localhost:5000. You can access the web application in your browser by navigating to this URL.
 
 ### 🍄 The Forbidden Lore of Mushroom Coin... 🍄
 In the fantastical realm of Woodlandia, a novel currency had surfaced - the Mushroom Coin. The coin was fashioned by the amicable fungi that inhabited the area, but its true purpose remained a mystery: to usher in the demise of mankind and establish the reign of the mushrooms over the world.
