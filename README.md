@@ -1,6 +1,5 @@
 <h1>Mushroom Coin 🍄</h1>
-<i>a fungi-powered cryptocurrency simulator</i>
-<i></i>
+
 <p align="center">
   <img src="./gif/screenshot.png" alt="website">
 </p>
