@@ -1,5 +1,3 @@
-<h1>Mushroom Coin 🍄</h1>
-
 <p align="center">
   <img src="./gif/screenshot.png" alt="website">
 </p>
