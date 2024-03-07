@@ -1,27 +1,30 @@
-
- <h1>Mushroom Coin 🍄</h1>
-
- <i>a fungi-powered cryptocurrency simulator</i>
+<h1>Mushroom Coin 🍄</h1>
+<i>a fungi-powered cryptocurrency simulator</i>
 
 <p align="center">
-  <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!">
+  <img src="./gif/screenshot.png" alt="website">
 </p>
 
-#### Join the mushrooms (how to run)...
+#### How to run...
 
-Run the application using 'python app.py' after cloning. You may have to do 'pip install Flask' first.
+1. Create a virtual environment:
 
-This will start a local server running on http://localhost:5000. You can access the web application in your browser by navigating to this URL.
+`python -m venv venv`
 
-### 🍄 The Forbidden Lore of Mushroom Coin... 🍄
-In the fantastical realm of Woodlandia, a novel currency had surfaced - the Mushroom Coin. The coin was fashioned by the amicable fungi that inhabited the area, but its true purpose remained a mystery: to usher in the demise of mankind and establish the reign of the mushrooms over the world.
+2. Activate the virtual environment:
+ For Unix/Linux:
+`source venv/bin/activate`
 
-Bartholomew, a daring adventurer of the Woodlandia, was among the first to uncover the Mushroom Coin. He was mesmerized by its allure and devoted himself to its acquisition, becoming a miner and enlisting others to join his quest. Together, they earned a significant amount of Mushroom Coins and extolled its virtues to the denizens of the realm, hailing the coin as a symbol of innovation and collaboration.
+ For Windows:
+`venv\Scripts\activate`
 
-However, unbeknownst to Bartholomew and his companions, the amiable mushrooms had ulterior motives. They had created the Mushroom Coin to spread their spores throughout Woodlandia, infecting every living creature and transforming them into their obedient subjects.
+3. Install the required dependencies:
+`pip install Flask`
 
-As the Mushroom Coin grew in popularity, the spores spread farther, until it was too late to prevent the mushroom's plan. Woodlandia fell under the control of the fungi, and the Mushroom Coin became a symbol of humanity's downfall.
+4. Run the application:
+`python app.py`
+Open your web browser and navigate to [http://localhost:5000](http://127.0.0.1:5000/)
 
-Bartholomew, once a gallant adventurer, now languished as a slave of the mushroom overlords, rueing the day he became a miner of the Mushroom Coin. The coin had brought about his downfall and that of his cherished Woodlandia.
+In the enchanted realm of Woodlandia, a peculiar currency emerged from the depths of the forest - the Mushroom Coin. Created by the seemingly friendly fungi that inhabited the land, the true purpose of the coin remained shrouded in mystery. Little did the inhabitants know that the Mushroom Coin was part of a sinister plot to bring about the downfall of humanity and establish the dominion of the mushrooms over the world.
 
-##### A fun project by me. Enjoy!
+<p align="center"> <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!"> </p>

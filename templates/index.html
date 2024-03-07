@@ -11,72 +11,106 @@
     />
     <style>
       body {
-        font-family: "Space Mono", monospace;
+        font-family: "Helvetica Neue", Arial, sans-serif;
         background-color: #e35d5b;
         color: white;
       }
 
       .container {
-        padding-top: 20px;
+        padding-top: 40px;
       }
 
-      h1,
-      h2,
-      .lead,
+      h1 {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+
+      .lead {
+        font-size: 24px;
+        font-weight: 300;
+        margin-bottom: 30px;
+      }
+
       .how-to {
-        text-align: left;
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 40px;
       }
 
-      button,
-      input,
       label {
-        margin: 5px 0;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      input,
+      button {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px 20px;
       }
 
       .btn-primary,
       .btn-success,
       .btn-info {
-        background-color: white; /* White buttons */
+        background-color: white;
         color: #e35d5b;
         border: none;
       }
 
       .form-control {
-        background-color: #fde8e4; /* Light red background */
+        background-color: #fde8e4;
         color: #e35d5b;
         border: 1px solid white;
       }
 
       .pre-scrollable {
-        background-color: #fde8e4; /* Light red background */
+        background-color: #fde8e4;
         color: #e35d5b;
+        font-size: 16px;
+        padding: 20px;
       }
     </style>
     <link rel="icon" href="mushie.jpg" type="image/jpg" />
   </head>
   <body>
-    <div class="container my-4">
-      <h1 class="text-center mb-4">MUSHROOM COIN</h1>
-      <p>a simple fungi-powered cryptocurrency simulator.</p>
+    <div class="container">
+      <h1 class="text-center">MUSHROOM COIN</h1>
+      <p class="text-center">A simple fungi-powered cryptocurrency simulator.</p>
       <p class="lead">
         Once upon a time, in a magical forest, a group of mushrooms decided to
         create their own currency. They called it Mushroom Coin!
       </p>
-      <p class="how-to">
-        <strong>How to Use Mushroom Coin:</strong><br />
-        1. Mine: Enter your address in "Mine a Block" and click "Mine".<br />
-        2. Send: Fill "Sender", "Receiver", and "Amount" in "New Transaction"
-        and click "Submit".<br />
-        3. View: Click "View Chain" to see blockchain data.
-      </p>
+      <div class="how-to">
+        <p><strong>How to Use Mushroom Coin:</strong></p>
+        <ol>
+          <li>Mine: Enter your address in "Mine a Block" and click "Mine".</li>
+          <li>Send: Fill "Sender", "Receiver", and "Amount" in "New Transaction" and click "Submit".</li>
+          <li>View: Click "View Chain" to see blockchain data.</li>
+        </ol>
+      </div>
       <!-- Mining Block Section -->
-      <section class="mb-4">
+      <section class="mb-5">
         <h2>Mine a Block ⛏️</h2>
-        <form
-          class="form-inline"
-          onsubmit="event.preventDefault(); mineBlock();"
-        >
-          <div class="form-group mb-2 mr-2">
+        <form class="form-inline" onsubmit="event.preventDefault(); mineBlock();">
+          <div class="form-group mr-3">
             <label for="miner_address" class="sr-only">Miner Address:</label>
             <input
               type="text"
@@ -87,11 +121,11 @@
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary mb-2">Mine</button>
+          <button type="submit" class="btn btn-primary">Mine</button>
         </form>
       </section>
       <!-- New Transaction Section -->
-      <section class="mb-4">
+      <section class="mb-5">
         <h2>New Transaction 💸</h2>
         <form onsubmit="event.preventDefault(); makeTransaction();">
           <div class="form-group">
@@ -134,7 +168,7 @@
       <!-- Blockchain Section -->
       <section>
         <h2>Blockchain ⛓️</h2>
-        <button class="btn btn-info" onclick="getChain()">View Chain</button>
+        <button class="btn btn-info mb-3" onclick="getChain()">View Chain</button>
         <pre id="chain" class="pre-scrollable"></pre>
       </section>
     </div>
