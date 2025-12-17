@@ -13,19 +13,22 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="page">
+  <div class="spore spore-a"></div>
+  <div class="spore spore-b"></div>
   <section class="hero">
     <div class="hero__badge">
       <ion-icon name="sparkles"></ion-icon>
-      <span>Browser-based blockchain lab</span>
+      <span>Whimsical on-chain terrarium</span>
     </div>
     <div class="hero__wrap">
       <div class="hero__copy">
+        <p class="eyebrow hero__eyebrow">Cultivate the chain</p>
         <h1>
-          Grow a tiny <span>fungal economy</span> with proof-of-work inside your browser.
+          Sprout a <span>mycelial ledger</span> powered by playful proof of work.
         </h1>
         <p>
-          Queue transactions, mine blocks, and watch the Mushroom Coin chain evolve in real time.
-          Everything runs locally—no backend, no wallet needed.
+          Spawn transfers, harvest blocks, and watch spores float across the ledger. Everything runs in
+          your browser - no servers, no wallets.
         </p>
         <div class="hero__actions">
           <ion-button size="large" color="primary" (click)="onMineBlock()" [disabled]="mineForm.invalid || mining()">
@@ -56,9 +59,27 @@
             <span class="value">{{ stats().pending }}</span>
           </div>
         </div>
+        <div class="caps">
+          <div class="cap">
+            <p class="eyebrow">Difficulty</p>
+            <p class="cap__value">{{ difficulty }} leading zeros</p>
+            <p class="cap__note">Every hash must match the cap pattern.</p>
+          </div>
+          <div class="cap">
+            <p class="eyebrow">Miner reward</p>
+            <p class="cap__value">{{ minerReward }} MSH</p>
+            <p class="cap__note">Paid instantly when a block sprouts.</p>
+          </div>
+          <div class="cap">
+            <p class="eyebrow">Local only</p>
+            <p class="cap__value">No backend</p>
+            <p class="cap__note">Purely front-end spores and hashes.</p>
+          </div>
+        </div>
       </div>
       <div class="hero__visual">
-        <img src="assets/media/mushroom.gif" alt="Mushroom animation" />
+        <div class="halo"></div>
+        <img class="mushroom-gif" src="assets/media/mushroom.gif" alt="Mushroom animation" />
         <div class="badge">
           <ion-icon name="flash"></ion-icon>
           <div>
@@ -67,6 +88,9 @@
             <p class="note">per block</p>
           </div>
         </div>
+        <div class="bubble bubble--one">00...0</div>
+        <div class="bubble bubble--two">pow()</div>
+        <div class="bubble bubble--three">nonce++</div>
       </div>
     </div>
   </section>
@@ -154,7 +178,7 @@
                 <ion-item *ngFor="let tx of pending(); trackBy: trackTransaction">
                   <ion-icon slot="start" name="flash"></ion-icon>
                   <ion-label>
-                    <h3>{{ tx.sender }} → {{ tx.receiver }}</h3>
+                    <h3>{{ tx.sender }} -> {{ tx.receiver }}</h3>
                     <p>{{ tx.amount | number : '1.0-2' }} MSH</p>
                     <ion-note *ngIf="tx.note">{{ tx.note }}</ion-note>
                   </ion-label>
@@ -179,7 +203,7 @@
                 <ion-item slot="header" color="dark" lines="full">
                   <ion-label>
                     <h3>Block #{{ block.index }}</h3>
-                    <p>{{ block.transactions.length }} tx · {{ block.timestamp | date : 'medium' }}</p>
+                    <p>{{ block.transactions.length }} tx - {{ block.timestamp | date : 'medium' }}</p>
                   </ion-label>
                   <ion-badge slot="end" color="success">{{ block.transactions.length }} tx</ion-badge>
                 </ion-item>
@@ -222,7 +246,7 @@
                           </div>
                         </div>
                         <ion-note>{{ tx.timestamp | date : 'short' }}</ion-note>
-                        <ion-note *ngIf="tx.note">“{{ tx.note }}”</ion-note>
+                        <ion-note *ngIf="tx.note">"{{ tx.note }}"</ion-note>
                       </ion-label>
                     </ion-item>
                   </ion-list>
