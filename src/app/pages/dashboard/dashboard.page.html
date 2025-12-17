@@ -15,87 +15,88 @@
 <ion-content [fullscreen]="true" class="page">
   <div class="spore spore-a"></div>
   <div class="spore spore-b"></div>
-  <section class="hero">
-    <div class="hero__badge">
-      <ion-icon name="sparkles"></ion-icon>
-      <span>Whimsical on-chain terrarium</span>
-    </div>
-    <div class="hero__wrap">
-      <div class="hero__copy">
-        <p class="eyebrow hero__eyebrow">Cultivate the chain</p>
-        <h1>
-          Sprout a <span>mycelial ledger</span> powered by playful proof of work.
-        </h1>
-        <p>
-          Spawn transfers, harvest blocks, and watch spores float across the ledger. Everything runs in
-          your browser - no servers, no wallets.
-        </p>
-        <div class="hero__actions">
-          <ion-button size="large" color="primary" (click)="onMineBlock()" [disabled]="mineForm.invalid || mining()">
-            <ion-icon name="flash" slot="start"></ion-icon>
-            {{ mining() ? 'Mining...' : 'Mine a block' }}
-          </ion-button>
-          <ion-button size="large" fill="clear" color="light" (click)="onCreateTransaction()"
-            [disabled]="transactionForm.invalid">
-            <ion-icon name="planet" slot="start"></ion-icon>
-            Queue a transaction
-          </ion-button>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero__badge">
+        <ion-icon name="sparkles"></ion-icon>
+        <span>Whimsical on-chain terrarium</span>
+      </div>
+      <div class="hero__wrap">
+        <div class="hero__copy">
+          <p class="eyebrow hero__eyebrow">Cultivate the chain</p>
+          <h1>
+            Sprout a <span>mycelial ledger</span> powered by playful proof of work.
+          </h1>
+          <p>
+            Spawn transfers, harvest blocks, and watch spores float across the ledger. Everything runs in
+            your browser - no servers, no wallets.
+          </p>
+          <div class="hero__actions">
+            <ion-button size="large" color="primary" (click)="onMineBlock()" [disabled]="mineForm.invalid || mining()">
+              <ion-icon name="flash" slot="start"></ion-icon>
+              {{ mining() ? 'Mining...' : 'Mine a block' }}
+            </ion-button>
+            <ion-button size="large" fill="clear" color="light" (click)="onCreateTransaction()"
+              [disabled]="transactionForm.invalid">
+              <ion-icon name="planet" slot="start"></ion-icon>
+              Queue a transaction
+            </ion-button>
+          </div>
+          <div class="hero__stats">
+            <div class="stat">
+              <span class="label">Chain height</span>
+              <span class="value">{{ stats().height }}</span>
+            </div>
+            <div class="stat">
+              <span class="label">Total minted</span>
+              <span class="value">{{ stats().minted | number : '1.0-2' }} MSH</span>
+            </div>
+            <div class="stat">
+              <span class="label">Transactions</span>
+              <span class="value">{{ stats().txCount }}</span>
+            </div>
+            <div class="stat">
+              <span class="label">Pending</span>
+              <span class="value">{{ stats().pending }}</span>
+            </div>
+          </div>
+          <div class="caps">
+            <div class="cap">
+              <p class="eyebrow">Difficulty</p>
+              <p class="cap__value">{{ difficulty }} leading zeros</p>
+              <p class="cap__note">Every hash must match the cap pattern.</p>
+            </div>
+            <div class="cap">
+              <p class="eyebrow">Miner reward</p>
+              <p class="cap__value">{{ minerReward }} MSH</p>
+              <p class="cap__note">Paid instantly when a block sprouts.</p>
+            </div>
+            <div class="cap">
+              <p class="eyebrow">Local only</p>
+              <p class="cap__value">No backend</p>
+              <p class="cap__note">Purely front-end spores and hashes.</p>
+            </div>
+          </div>
         </div>
-        <div class="hero__stats">
-          <div class="stat">
-            <span class="label">Chain height</span>
-            <span class="value">{{ stats().height }}</span>
+        <div class="hero__visual">
+          <div class="halo"></div>
+          <img class="mushroom-gif" src="assets/media/mushroom.gif" alt="Mushroom animation" />
+          <div class="badge">
+            <ion-icon name="flash"></ion-icon>
+            <div>
+              <p class="eyebrow">Miner reward</p>
+              <p class="value">{{ minerReward }} MSH</p>
+              <p class="note">per block</p>
+            </div>
           </div>
-          <div class="stat">
-            <span class="label">Total minted</span>
-            <span class="value">{{ stats().minted | number : '1.0-2' }} MSH</span>
-          </div>
-          <div class="stat">
-            <span class="label">Transactions</span>
-            <span class="value">{{ stats().txCount }}</span>
-          </div>
-          <div class="stat">
-            <span class="label">Pending</span>
-            <span class="value">{{ stats().pending }}</span>
-          </div>
-        </div>
-        <div class="caps">
-          <div class="cap">
-            <p class="eyebrow">Difficulty</p>
-            <p class="cap__value">{{ difficulty }} leading zeros</p>
-            <p class="cap__note">Every hash must match the cap pattern.</p>
-          </div>
-          <div class="cap">
-            <p class="eyebrow">Miner reward</p>
-            <p class="cap__value">{{ minerReward }} MSH</p>
-            <p class="cap__note">Paid instantly when a block sprouts.</p>
-          </div>
-          <div class="cap">
-            <p class="eyebrow">Local only</p>
-            <p class="cap__value">No backend</p>
-            <p class="cap__note">Purely front-end spores and hashes.</p>
-          </div>
+          <div class="bubble bubble--one">00...0</div>
+          <div class="bubble bubble--two">pow()</div>
         </div>
       </div>
-      <div class="hero__visual">
-        <div class="halo"></div>
-        <img class="mushroom-gif" src="assets/media/mushroom.gif" alt="Mushroom animation" />
-        <div class="badge">
-          <ion-icon name="flash"></ion-icon>
-          <div>
-            <p class="eyebrow">Miner reward</p>
-            <p class="value">{{ minerReward }} MSH</p>
-            <p class="note">per block</p>
-          </div>
-        </div>
-        <div class="bubble bubble--one">00...0</div>
-        <div class="bubble bubble--two">pow()</div>
-        <div class="bubble bubble--three">nonce++</div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <ion-grid fixed class="panels">
+  <ion-grid fixed class="panels shell">
     <ion-row>
       <ion-col size="12" sizeMd="6">
         <ion-card class="panel-card">
