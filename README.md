@@ -1,27 +1,13 @@
-<p align="center">
-  <img src="./gif/screenshot.png" alt="website">
-</p>
+# Mushroom Coin
 
-Little did the inhabitants know that the Mushroom Coin was part of a sinister plot to bring about the downfall of humanity and establish the dominion of the mushrooms over the world. Learn about the blockchain here before its too late.
+Angular + Ionic playground for mining, queueing, and inspecting a browser-only Mushroom Coin chain.
 
-#### How to run...
+## Run it locally
+- `npm install`
+- `npm start` then open http://localhost:4200
+- `npm run build` to produce a production bundle in `dist/`
 
-1. Create a virtual environment:
-
-`python -m venv venv`
-
-2. Activate the virtual environment:
- For Unix/Linux:
-`source venv/bin/activate`
-
- For Windows:
-`venv\Scripts\activate`
-
-3. Install the required dependencies:
-`pip install Flask`
-
-4. Run the application:
-`python app.py`
-Open your web browser and navigate to [http://localhost:5000](http://127.0.0.1:5000/)
-
-<p align="center"> <img src="./gif/mushroom.gif" alt="Mushrooooooms!!!"> </p>
+## What's inside
+- In-browser proof-of-work with miner rewards and a pending transaction queue
+- Live block explorer showing hashes, nonces, and transaction details
+- Ionic styling with a custom forest palette and animated hero art

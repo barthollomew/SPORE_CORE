@@ -1,0 +1,246 @@
+<ion-header translucent="true" class="header">
+  <ion-toolbar>
+    <ion-title>Mushroom Coin</ion-title>
+    <ion-chip slot="end" color="tertiary" outline="true">
+      <ion-icon name="pulse"></ion-icon>
+      <ion-label>Difficulty {{ difficulty }}</ion-label>
+    </ion-chip>
+    <ion-chip slot="end" color="success" outline="true">
+      <ion-icon name="shield-checkmark"></ion-icon>
+      <ion-label>{{ chainIsHealthy() ? 'Chain healthy' : 'Re-run validation' }}</ion-label>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page">
+  <section class="hero">
+    <div class="hero__badge">
+      <ion-icon name="sparkles"></ion-icon>
+      <span>Browser-based blockchain lab</span>
+    </div>
+    <div class="hero__wrap">
+      <div class="hero__copy">
+        <h1>
+          Grow a tiny <span>fungal economy</span> with proof-of-work inside your browser.
+        </h1>
+        <p>
+          Queue transactions, mine blocks, and watch the Mushroom Coin chain evolve in real time.
+          Everything runs locally—no backend, no wallet needed.
+        </p>
+        <div class="hero__actions">
+          <ion-button size="large" color="primary" (click)="onMineBlock()" [disabled]="mineForm.invalid || mining()">
+            <ion-icon name="flash" slot="start"></ion-icon>
+            {{ mining() ? 'Mining...' : 'Mine a block' }}
+          </ion-button>
+          <ion-button size="large" fill="clear" color="light" (click)="onCreateTransaction()"
+            [disabled]="transactionForm.invalid">
+            <ion-icon name="planet" slot="start"></ion-icon>
+            Queue a transaction
+          </ion-button>
+        </div>
+        <div class="hero__stats">
+          <div class="stat">
+            <span class="label">Chain height</span>
+            <span class="value">{{ stats().height }}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Total minted</span>
+            <span class="value">{{ stats().minted | number : '1.0-2' }} MSH</span>
+          </div>
+          <div class="stat">
+            <span class="label">Transactions</span>
+            <span class="value">{{ stats().txCount }}</span>
+          </div>
+          <div class="stat">
+            <span class="label">Pending</span>
+            <span class="value">{{ stats().pending }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <img src="assets/media/mushroom.gif" alt="Mushroom animation" />
+        <div class="badge">
+          <ion-icon name="flash"></ion-icon>
+          <div>
+            <p class="eyebrow">Miner reward</p>
+            <p class="value">{{ minerReward }} MSH</p>
+            <p class="note">per block</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ion-grid fixed class="panels">
+    <ion-row>
+      <ion-col size="12" sizeMd="6">
+        <ion-card class="panel-card">
+          <ion-card-header>
+            <ion-card-subtitle>Proof-of-work lab</ion-card-subtitle>
+            <ion-card-title>Mine a block</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form class="stack" [formGroup]="mineForm" (ngSubmit)="onMineBlock()">
+              <ion-item fill="outline" class="field">
+                <ion-label position="stacked">Miner address</ion-label>
+                <ion-input formControlName="miner" autocomplete="off" inputmode="text"
+                  placeholder="mycelium-operator"></ion-input>
+              </ion-item>
+              <ion-note color="medium">
+                Targets {{ difficulty }} leading zeros. Rewards {{ minerReward }} MSH to the miner.
+              </ion-note>
+              <div class="actions">
+                <ion-button type="submit" color="primary" [disabled]="mineForm.invalid || mining()">
+                  <ion-icon name="flash" slot="start"></ion-icon>
+                  {{ mining() ? 'Crunching nonce...' : 'Start mining' }}
+                </ion-button>
+                <ion-spinner *ngIf="mining()" name="crescent" color="light"></ion-spinner>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" sizeMd="6">
+        <ion-card class="panel-card">
+          <ion-card-header>
+            <ion-card-subtitle>Transaction queue</ion-card-subtitle>
+            <ion-card-title>Schedule a transfer</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form class="stack" [formGroup]="transactionForm" (ngSubmit)="onCreateTransaction()">
+              <ion-item fill="outline" class="field">
+                <ion-label position="stacked">Sender</ion-label>
+                <ion-input formControlName="sender" autocomplete="off" inputmode="text"
+                  placeholder="forest-treasury"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" class="field">
+                <ion-label position="stacked">Receiver</ion-label>
+                <ion-input formControlName="receiver" autocomplete="off" inputmode="text"
+                  placeholder="grove-reserve"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" class="field">
+                <ion-label position="stacked">Amount (MSH)</ion-label>
+                <ion-input type="number" formControlName="amount" min="0.01" step="0.01"
+                  inputmode="decimal"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" class="field">
+                <ion-label position="stacked">Memo (optional)</ion-label>
+                <ion-input formControlName="note" autocomplete="off" inputmode="text"
+                  placeholder="What is this transfer for?"></ion-input>
+              </ion-item>
+
+              <div class="actions">
+                <ion-button type="submit" color="secondary" [disabled]="transactionForm.invalid">
+                  <ion-icon name="planet" slot="start"></ion-icon>
+                  Add to pending
+                </ion-button>
+              </div>
+            </form>
+
+            <div class="pending">
+              <div class="pending__header">
+                <p>Pending transactions</p>
+                <ion-chip color="tertiary" outline="true">
+                  <ion-icon name="pulse"></ion-icon>
+                  <ion-label>{{ pending().length }}</ion-label>
+                </ion-chip>
+              </div>
+              <div *ngIf="pending().length === 0" class="empty">
+                <ion-icon name="sparkles"></ion-icon>
+                <p>Queue a transfer to give the next block something to seal.</p>
+              </div>
+              <ion-list lines="none" *ngIf="pending().length > 0">
+                <ion-item *ngFor="let tx of pending(); trackBy: trackTransaction">
+                  <ion-icon slot="start" name="flash"></ion-icon>
+                  <ion-label>
+                    <h3>{{ tx.sender }} → {{ tx.receiver }}</h3>
+                    <p>{{ tx.amount | number : '1.0-2' }} MSH</p>
+                    <ion-note *ngIf="tx.note">{{ tx.note }}</ion-note>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="panel-card chain">
+          <ion-card-header>
+            <ion-card-subtitle>Transparent by design</ion-card-subtitle>
+            <ion-card-title>Live chain</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-accordion-group expand="inset">
+              <ion-accordion *ngFor="let block of displayChain(); trackBy: trackBlock" [value]="block.hash">
+                <ion-item slot="header" color="dark" lines="full">
+                  <ion-label>
+                    <h3>Block #{{ block.index }}</h3>
+                    <p>{{ block.transactions.length }} tx · {{ block.timestamp | date : 'medium' }}</p>
+                  </ion-label>
+                  <ion-badge slot="end" color="success">{{ block.transactions.length }} tx</ion-badge>
+                </ion-item>
+                <div class="block" slot="content">
+                  <div class="block__meta">
+                    <div>
+                      <p class="eyebrow">Hash</p>
+                      <p class="mono">{{ formatHash(block.hash) }}</p>
+                    </div>
+                    <div>
+                      <p class="eyebrow">Previous</p>
+                      <p class="mono">{{ formatHash(block.previousHash) }}</p>
+                    </div>
+                    <div>
+                      <p class="eyebrow">Nonce</p>
+                      <p class="mono">{{ block.nonce }}</p>
+                    </div>
+                    <div>
+                      <p class="eyebrow">Miner</p>
+                      <p class="mono">{{ block.miner }}</p>
+                    </div>
+                  </div>
+
+                  <ion-list lines="full">
+                    <ion-item *ngFor="let tx of block.transactions; trackBy: trackTransaction">
+                      <ion-icon slot="start" name="flash"></ion-icon>
+                      <ion-label>
+                        <div class="tx">
+                          <div>
+                            <p class="eyebrow">From</p>
+                            <p class="mono">{{ tx.sender }}</p>
+                          </div>
+                          <div>
+                            <p class="eyebrow">To</p>
+                            <p class="mono">{{ tx.receiver }}</p>
+                          </div>
+                          <div>
+                            <p class="eyebrow">Amount</p>
+                            <p class="mono">{{ tx.amount | number : '1.0-2' }} MSH</p>
+                          </div>
+                        </div>
+                        <ion-note>{{ tx.timestamp | date : 'short' }}</ion-note>
+                        <ion-note *ngIf="tx.note">“{{ tx.note }}”</ion-note>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-toast
+    [isOpen]="!!toastMessage()"
+    [message]="toastMessage() ?? ''"
+    duration="2500"
+    position="bottom"
+    color="dark"
+    (didDismiss)="toastMessage.set(null)">
+  </ion-toast>
+</ion-content>
