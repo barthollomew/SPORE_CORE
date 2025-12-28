@@ -1,13 +1,34 @@
 # Mushroom Coin
 
-Angular + Ionic playground for mining, queueing, and inspecting a browser-only Mushroom Coin chain.
+Mushroom Coin is a decentralised cryptocurrency implementation built for educational purposes. It runs entirely in the browser and demonstrates mining, transactions, and block validation with a simple proof of work chain. It is not intended for production use or real funds.
 
-## Run it locally
-- `npm install`
-- `npm start` then open http://localhost:4200
-- `npm run build` to produce a production bundle in `dist/`
+## Features
+- Proof of work mining with miner rewards
+- Pending transaction queue and block creation
+- Block explorer view of hashes, nonces, and transactions
+- Ionic UI built on Angular standalone components
 
-## What's inside
-- In-browser proof-of-work with miner rewards and a pending transaction queue
-- Live block explorer showing hashes, nonces, and transaction details
-- Ionic styling with a custom forest palette and animated hero art
+## Tech stack
+- Angular
+- Ionic
+- TypeScript
+- crypto-js for hashing
+
+## Project structure
+- src/app/core: singleton services and application wide logic
+- src/app/features: route level pages and feature areas
+- src/app/theme: Ionic theme variables
+- src/assets: static assets
+- public: static assets copied at build time
+
+## Run locally
+- npm install
+- npm start
+- open http://localhost:4200
+
+## Build
+- npm run build
+
+## Notes
+- Chain data lives in memory and resets on refresh.
+- There is no real network, wallet, or persistent storage.
