@@ -50,9 +50,10 @@
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(260px, 340px) minmax(240px, 320px) 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 16px;
   align-items: start;
+  justify-content: center;
   min-height: 0;
 }
 
@@ -63,6 +64,7 @@
   padding: 16px;
   box-shadow: 0 0 0 1px rgba(47, 255, 123, 0.08);
   min-height: 0;
+  min-width: 0;
 }
 
 .panel__header {
@@ -289,6 +291,22 @@
   color: var(--text-muted);
 }
 
+.challenge__status {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.challenge__status--ok {
+  color: var(--accent);
+}
+
+.challenge__status--bad {
+  color: #a7ff7a;
+}
+
 ion-button {
   --background: var(--accent);
   --background-hover: #3dff87;
@@ -337,23 +355,13 @@ ion-content::part(scroll) {
   }
 }
 
-@media (max-width: 1200px) {
-  .layout {
-    grid-template-columns: minmax(260px, 340px) 1fr;
-  }
-
-  .guide {
-    grid-column: 1 / -1;
-  }
-}
-
 @media (max-width: 900px) {
   .container {
     padding: 16px;
   }
 
   .layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(240px, 520px);
   }
 
   .header__status {

@@ -182,6 +182,22 @@ export class DashboardPage {
     return Number.isFinite(numericValue) && numericValue === this.challenge().answer;
   }
 
+  challengeStatusMessage(): string {
+    const rawValue = this.mineForm.controls.solution.value;
+    const trimmed = rawValue.trim();
+
+    if (!trimmed) {
+      return '';
+    }
+
+    const numericValue = Number(trimmed);
+    if (!Number.isFinite(numericValue)) {
+      return 'challenge incorrect';
+    }
+
+    return numericValue === this.challenge().answer ? 'challenge ok' : 'challenge incorrect';
+  }
+
   refreshChallenge(): void {
     this.resetChallenge();
   }
@@ -202,13 +218,12 @@ export class DashboardPage {
   }
 
   private createChallenge(): MiningChallenge {
-    const left = this.randomInt(3, 12);
-    const right = this.randomInt(2, 9);
-    const offset = this.randomInt(1, 15);
+    const left = this.randomInt(1, 9);
+    const right = this.randomInt(1, 9);
 
     return {
-      question: `${left} * ${right} + ${offset}`,
-      answer: left * right + offset,
+      question: `${left} + ${right}`,
+      answer: left + right,
     };
   }
 
