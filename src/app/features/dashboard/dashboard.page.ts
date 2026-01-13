@@ -15,6 +15,11 @@ import {
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Block, BlockchainService, Transaction } from '../../core/services/blockchain.service';
 
+type MiningChallenge = {
+  question: string;
+  answer: number;
+};
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -42,6 +47,7 @@ export class DashboardPage {
 
   readonly mineForm = this.fb.group({
     miner: ['0xforager', [Validators.required, Validators.minLength(4)]],
+    solution: ['', [Validators.required]],
   });
 
   readonly transactionForm = this.fb.group({
@@ -57,6 +63,7 @@ export class DashboardPage {
   readonly toastMessage = signal<string | null>(null);
   readonly difficulty = this.blockchain.getDifficulty();
   readonly minerReward = this.blockchain.getReward();
+  readonly challenge = signal<MiningChallenge>(this.createChallenge());
 
   readonly stats = computed(() => {
     const chain = this.chain();
@@ -88,8 +95,18 @@ export class DashboardPage {
   }
 
   async onMineBlock(): Promise<void> {
+    if (this.mining()) {
+      return;
+    }
+
     if (this.mineForm.invalid) {
       this.mineForm.markAllAsTouched();
+      return;
+    }
+
+    if (!this.isChallengeSolved()) {
+      this.showToast('Incorrect solution. New challenge issued.');
+      this.resetChallenge();
       return;
     }
 
@@ -104,6 +121,7 @@ export class DashboardPage {
       this.showToast(message);
     } finally {
       this.mining.set(false);
+      this.resetChallenge();
       this.refresh();
     }
   }
@@ -152,6 +170,22 @@ export class DashboardPage {
     return this.blockchain.isValid();
   }
 
+  isChallengeSolved(): boolean {
+    const rawValue = this.mineForm.controls.solution.value;
+    const trimmed = rawValue.trim();
+
+    if (!trimmed) {
+      return false;
+    }
+
+    const numericValue = Number(trimmed);
+    return Number.isFinite(numericValue) && numericValue === this.challenge().answer;
+  }
+
+  refreshChallenge(): void {
+    this.resetChallenge();
+  }
+
   private refresh(): void {
     this.chain.set(this.blockchain.getChain());
     this.pending.set(this.blockchain.getPendingTransactions());
@@ -159,5 +193,26 @@ export class DashboardPage {
 
   private showToast(message: string): void {
     this.toastMessage.set(message);
+  }
+
+  private resetChallenge(): void {
+    this.challenge.set(this.createChallenge());
+    this.mineForm.controls.solution.setValue('');
+    this.mineForm.controls.solution.markAsPristine();
+  }
+
+  private createChallenge(): MiningChallenge {
+    const left = this.randomInt(3, 12);
+    const right = this.randomInt(2, 9);
+    const offset = this.randomInt(1, 15);
+
+    return {
+      question: `${left} * ${right} + ${offset}`,
+      answer: left * right + offset,
+    };
+  }
+
+  private randomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
