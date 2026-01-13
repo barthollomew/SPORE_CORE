@@ -24,9 +24,9 @@ ion-modal.guide-modal {
   --background: #041304;
   --color: #b7f7c6;
   --width: min(520px, 92vw);
-  --height: fit-content;
+  --height: min(520px, 80vh);
   --max-height: 90vh;
-  --min-height: 200px;
+  --min-height: 220px;
   --border-radius: 8px;
 }
 
@@ -41,7 +41,7 @@ ion-modal.guide-modal::part(content) {
 }
 
 .guide-modal__body {
-  padding: 12px 14px;
+  padding: 16px 18px;
   display: grid;
   gap: 10px;
   color: #b7f7c6;
