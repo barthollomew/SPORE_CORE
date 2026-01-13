@@ -1,27 +1,12 @@
-import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import {
-  IonAccordion,
-  IonAccordionGroup,
-  IonBadge,
   IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonChip,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
-  IonIcon,
   IonInput,
   IonItem,
   IonLabel,
-  IonList,
-  IonNote,
-  IonRow,
   IonSpinner,
   IonTitle,
   IonToolbar,
@@ -29,8 +14,6 @@ import {
 } from '@ionic/angular/standalone';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Block, BlockchainService, Transaction } from '../../core/services/blockchain.service';
-import { addIcons } from 'ionicons';
-import { flash, planet, pulse, shieldCheckmark, sparkles } from 'ionicons/icons';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,29 +21,12 @@ import { flash, planet, pulse, shieldCheckmark, sparkles } from 'ionicons/icons'
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    DatePipe,
-    DecimalPipe,
-    IonAccordion,
-    IonAccordionGroup,
-    IonBadge,
     IonButton,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonChip,
-    IonCol,
     IonContent,
-    IonGrid,
     IonHeader,
-    IonIcon,
     IonInput,
     IonItem,
     IonLabel,
-    IonList,
-    IonNote,
-    IonRow,
     IonSpinner,
     IonTitle,
     IonToolbar,
@@ -113,17 +79,11 @@ export class DashboardPage {
     };
   });
 
-  readonly latestBlock = computed(() => {
-    const chain = this.chain();
-    return chain.length ? chain[chain.length - 1] : null;
-  });
-
   readonly displayChain = computed(() =>
     [...this.chain()].sort((a, b) => b.index - a.index),
   );
 
   constructor() {
-    addIcons({ sparkles, shieldCheckmark, flash, planet, pulse });
     this.refresh();
   }
 
@@ -186,13 +146,6 @@ export class DashboardPage {
 
   trackTransaction(_: number, tx: Transaction): string {
     return tx.id;
-  }
-
-  formatHash(hash: string): string {
-    if (!hash) {
-      return '';
-    }
-    return `${hash.slice(0, 10)}...${hash.slice(-6)}`;
   }
 
   chainIsHealthy(): boolean {
