@@ -24,9 +24,9 @@ ion-modal.guide-modal {
   --background: #041304;
   --color: #b7f7c6;
   --width: min(520px, 92vw);
-  --height: min(520px, 85vh);
+  --height: fit-content;
   --max-height: 90vh;
-  --min-height: 240px;
+  --min-height: 200px;
   --border-radius: 8px;
 }
 
@@ -41,15 +41,21 @@ ion-modal.guide-modal::part(content) {
 }
 
 .guide-modal__body {
-  padding: 16px;
+  padding: 12px 14px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
   color: #b7f7c6;
 }
 
 .guide-modal__section {
   display: grid;
-  gap: 8px;
+  gap: 6px;
+}
+
+.guide-modal__section + .guide-modal__section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #1b4c2a;
 }
 
 .guide-modal__title {
@@ -62,7 +68,7 @@ ion-modal.guide-modal::part(content) {
 
 .guide__list {
   margin: 0;
-  padding-left: 16px;
+  padding-left: 14px;
   display: grid;
   gap: 6px;
   color: #79c694;
