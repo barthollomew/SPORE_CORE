@@ -62,6 +62,11 @@
               <div class="challenge__prompt">
                 <span>Challenge</span>
                 <span class="mono">{{ challenge().question }}</span>
+                <span class="challenge__status" *ngIf="challengeStatusMessage() as status"
+                  [class.challenge__status--ok]="isChallengeSolved()"
+                  [class.challenge__status--bad]="!isChallengeSolved()">
+                  {{ status }}
+                </span>
               </div>
               <ion-item fill="outline" class="field">
                 <ion-label position="stacked">Solution</ion-label>
@@ -74,11 +79,6 @@
                 </ion-button>
                 <span class="hint">Match the result before mining.</span>
               </div>
-              <p class="challenge__status" *ngIf="challengeStatusMessage() as status"
-                [class.challenge__status--ok]="isChallengeSolved()"
-                [class.challenge__status--bad]="!isChallengeSolved()">
-                {{ status }}
-              </p>
             </div>
             <ion-item fill="outline" class="field">
               <ion-label position="stacked">Miner address</ion-label>
@@ -182,34 +182,36 @@
   (didDismiss)="closeGuide()"
   class="guide-modal"
   cssClass="guide-modal">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Guide</ion-title>
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="closeGuide()">Close</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="guide-modal__content">
-    <div class="guide-modal__body">
-      <div class="section">
-        <h3>How to use</h3>
-        <ul class="guide__list">
-          <li>Queue one or more transactions.</li>
-          <li>Solve the mining challenge.</li>
-          <li>Mine a block to seal the queue.</li>
-          <li>Inspect hashes, nonce, and links.</li>
-        </ul>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Guide</ion-title>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="closeGuide()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="guide-modal__content">
+      <div class="guide-modal__body">
+        <div class="guide-modal__section">
+          <h3 class="guide-modal__title">How to use</h3>
+          <ul class="guide__list">
+            <li>Queue one or more transactions.</li>
+            <li>Solve the mining challenge.</li>
+            <li>Mine a block to seal the queue.</li>
+            <li>Inspect hashes, nonce, and links.</li>
+          </ul>
+        </div>
+        <div class="guide-modal__section">
+          <h3 class="guide-modal__title">What it teaches</h3>
+          <ul class="guide__list">
+            <li>Blocks link by previous hash.</li>
+            <li>Proof of work searches for a valid nonce.</li>
+            <li>Rewards create new supply.</li>
+            <li>Changing data breaks validation.</li>
+          </ul>
+        </div>
       </div>
-      <div class="section">
-        <h3>What it teaches</h3>
-        <ul class="guide__list">
-          <li>Blocks link by previous hash.</li>
-          <li>Proof of work searches for a valid nonce.</li>
-          <li>Rewards create new supply.</li>
-          <li>Changing data breaks validation.</li>
-        </ul>
-      </div>
-    </div>
-  </ion-content>
+    </ion-content>
+  </ng-template>
 </ion-modal>
