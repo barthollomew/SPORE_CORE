@@ -90,6 +90,12 @@
   gap: 10px;
 }
 
+.section__copy {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
 .section + .section {
   margin-top: 12px;
   padding-top: 12px;
@@ -264,6 +270,25 @@
   color: var(--text-muted);
 }
 
+.challenge {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px dashed var(--panel-border);
+  border-radius: 4px;
+  background: #020c02;
+}
+
+.challenge__prompt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
 ion-button {
   --background: var(--accent);
   --background-hover: #3dff87;
@@ -273,6 +298,12 @@ ion-button {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
+}
+
+ion-button[fill='outline'] {
+  --background: transparent;
+  --color: var(--accent);
+  --border-color: var(--panel-border-strong);
 }
 
 ion-spinner {

@@ -55,7 +55,25 @@
             <span>Difficulty {{ difficulty }}</span>
             <span>Reward {{ minerReward }} MSH</span>
           </div>
+          <p class="section__copy">Solve the challenge to simulate finding a valid nonce.</p>
           <form class="stack" [formGroup]="mineForm" (ngSubmit)="onMineBlock()">
+            <div class="challenge">
+              <div class="challenge__prompt">
+                <span>Challenge</span>
+                <span class="mono">{{ challenge().question }}</span>
+              </div>
+              <ion-item fill="outline" class="field">
+                <ion-label position="stacked">Solution</ion-label>
+                <ion-input type="number" formControlName="solution" min="0" step="1"
+                  inputmode="numeric" autocomplete="off"></ion-input>
+              </ion-item>
+              <div class="actions__row">
+                <ion-button type="button" fill="outline" size="small" (click)="refreshChallenge()">
+                  New challenge
+                </ion-button>
+                <span class="hint">Match the result before mining.</span>
+              </div>
+            </div>
             <ion-item fill="outline" class="field">
               <ion-label position="stacked">Miner address</ion-label>
               <ion-input formControlName="miner" autocomplete="off" inputmode="text"
