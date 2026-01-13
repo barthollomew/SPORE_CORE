@@ -11,6 +11,7 @@
 
 .page {
   --background: var(--page-bg);
+  --overflow: auto;
   background: var(--page-bg);
 }
 
@@ -273,6 +274,24 @@ ion-toast {
   --border-color: var(--panel-border);
   --border-style: solid;
   --border-width: 1px;
+}
+
+ion-content::part(scroll) {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 24px;
+}
+
+@media (min-width: 901px) {
+  .layout {
+    height: calc(100vh - 96px);
+  }
+
+  .actions,
+  .chain {
+    max-height: 100%;
+    overflow-y: auto;
+  }
 }
 
 @media (max-width: 900px) {
