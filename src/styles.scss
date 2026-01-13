@@ -19,3 +19,36 @@ body {
 * {
   box-sizing: border-box;
 }
+
+ion-modal.guide-modal {
+  --background: #041304;
+  --color: #b7f7c6;
+  --width: min(520px, 92vw);
+  --height: min(70vh, 520px);
+  --border-radius: 8px;
+}
+
+ion-modal.guide-modal::part(content) {
+  border: 1px solid #1b4c2a;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+.guide-modal__content {
+  --background: #041304;
+  --color: #b7f7c6;
+}
+
+.guide-modal__body {
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.guide__list {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 6px;
+  color: #79c694;
+  font-size: 0.75rem;
+}

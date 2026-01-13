@@ -1,4 +1,4 @@
-<ion-header translucent="true" class="header">
+<ion-header class="header">
   <ion-toolbar>
     <ion-title>SPORE_CORE</ion-title>
     <div class="header__status" slot="end">
@@ -11,12 +11,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [scrollY]="true" class="page">
+<ion-content [fullscreen]="false" [scrollY]="true" class="page">
   <div class="container">
     <div class="layout">
-      <section class="panel actions">
+      <section class="panel activity">
         <div class="panel__header">
-          <h2>Actions</h2>
+          <h2>Activity</h2>
           <p>Queue transactions and mine blocks locally.</p>
         </div>
 
@@ -93,34 +93,37 @@
             </div>
           </form>
         </div>
+      </section>
 
-        <div class="section">
-          <div class="section__header">
-            <h3>Pending queue</h3>
-            <span class="badge">{{ pending().length }}</span>
+      <section class="panel pending-panel scroll-panel">
+        <div class="panel__header panel__header--split">
+          <div class="panel__header-text">
+            <h2>Pending queue</h2>
+            <p>Waiting to be mined.</p>
           </div>
-          <div class="pending">
-            <div *ngIf="pending().length === 0" class="empty">
-              No pending transactions.
-            </div>
-            <div class="pending__list" *ngIf="pending().length > 0">
-              <div class="pending__item" *ngFor="let tx of pending(); trackBy: trackTransaction">
-                <div class="pending__line">
-                  <span class="mono">{{ tx.sender }}</span>
-                  <span class="arrow">-></span>
-                  <span class="mono">{{ tx.receiver }}</span>
-                </div>
-                <div class="pending__line">{{ tx.amount | number : '1.0-2' }} MSH</div>
-                <div class="pending__line dim" *ngIf="tx.note">"{{ tx.note }}"</div>
+          <span class="badge">{{ pending().length }}</span>
+        </div>
+        <div class="pending">
+          <div *ngIf="pending().length === 0" class="empty">
+            No pending transactions.
+          </div>
+          <div class="pending__list" *ngIf="pending().length > 0">
+            <div class="pending__item" *ngFor="let tx of pending(); trackBy: trackTransaction">
+              <div class="pending__line">
+                <span class="mono">{{ tx.sender }}</span>
+                <span class="arrow">-></span>
+                <span class="mono">{{ tx.receiver }}</span>
               </div>
+              <div class="pending__line">{{ tx.amount | number : '1.0-2' }} MSH</div>
+              <div class="pending__line dim" *ngIf="tx.note">"{{ tx.note }}"</div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="panel chain">
+      <section class="panel chain scroll-panel">
         <div class="panel__header">
-          <h2>Chain</h2>
+          <h2>Mined blocks</h2>
           <div class="stats">
             <span>Height {{ stats().height }}</span>
             <span>Minted {{ stats().minted | number : '1.0-2' }} MSH</span>
@@ -172,37 +175,41 @@
     color="dark"
     (didDismiss)="toastMessage.set(null)">
   </ion-toast>
-
-  <ion-modal [isOpen]="guideOpen()" (didDismiss)="closeGuide()" class="guide-modal">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Guide</ion-title>
-        <ion-buttons slot="end">
-          <ion-button fill="clear" (click)="closeGuide()">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="guide-modal__content">
-      <div class="guide-modal__body">
-        <div class="section">
-          <h3>How to use</h3>
-          <ul class="guide__list">
-            <li>Queue one or more transactions.</li>
-            <li>Solve the mining challenge.</li>
-            <li>Mine a block to seal the queue.</li>
-            <li>Inspect hashes, nonce, and links.</li>
-          </ul>
-        </div>
-        <div class="section">
-          <h3>What it teaches</h3>
-          <ul class="guide__list">
-            <li>Blocks link by previous hash.</li>
-            <li>Proof of work searches for a valid nonce.</li>
-            <li>Rewards create new supply.</li>
-            <li>Changing data breaks validation.</li>
-          </ul>
-        </div>
-      </div>
-    </ion-content>
-  </ion-modal>
 </ion-content>
+
+<ion-modal
+  [isOpen]="guideOpen()"
+  (didDismiss)="closeGuide()"
+  class="guide-modal"
+  cssClass="guide-modal">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Guide</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="closeGuide()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="guide-modal__content">
+    <div class="guide-modal__body">
+      <div class="section">
+        <h3>How to use</h3>
+        <ul class="guide__list">
+          <li>Queue one or more transactions.</li>
+          <li>Solve the mining challenge.</li>
+          <li>Mine a block to seal the queue.</li>
+          <li>Inspect hashes, nonce, and links.</li>
+        </ul>
+      </div>
+      <div class="section">
+        <h3>What it teaches</h3>
+        <ul class="guide__list">
+          <li>Blocks link by previous hash.</li>
+          <li>Proof of work searches for a valid nonce.</li>
+          <li>Rewards create new supply.</li>
+          <li>Changing data breaks validation.</li>
+        </ul>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal>
