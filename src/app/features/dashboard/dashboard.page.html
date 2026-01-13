@@ -6,6 +6,7 @@
       <span class="status" [class.status--bad]="!chainIsHealthy()">
         {{ chainIsHealthy() ? 'CHAIN OK' : 'CHAIN BAD' }}
       </span>
+      <ion-button size="small" fill="outline" (click)="openGuide()">Guide</ion-button>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -13,31 +14,6 @@
 <ion-content [fullscreen]="true" [scrollY]="true" class="page">
   <div class="container">
     <div class="layout">
-      <section class="panel guide">
-        <div class="panel__header">
-          <h2>Guide</h2>
-          <p>spore_core is a browser-only proof-of-work sandbox.</p>
-        </div>
-        <div class="section">
-          <h3>How to use</h3>
-          <ul class="guide__list">
-            <li>Queue one or more transactions.</li>
-            <li>Solve the mining challenge.</li>
-            <li>Mine a block to seal the queue.</li>
-            <li>Inspect hashes, nonce, and links.</li>
-          </ul>
-        </div>
-        <div class="section">
-          <h3>What it teaches</h3>
-          <ul class="guide__list">
-            <li>Blocks link by previous hash.</li>
-            <li>Proof of work searches for a valid nonce.</li>
-            <li>Rewards create new supply.</li>
-            <li>Changing data breaks validation.</li>
-          </ul>
-        </div>
-      </section>
-
       <section class="panel actions">
         <div class="panel__header">
           <h2>Actions</h2>
@@ -89,8 +65,8 @@
               </div>
               <ion-item fill="outline" class="field">
                 <ion-label position="stacked">Solution</ion-label>
-                <ion-input type="number" formControlName="solution" min="0" step="1"
-                  inputmode="numeric" autocomplete="off"></ion-input>
+                <ion-input type="text" formControlName="solution" inputmode="numeric" pattern="[0-9]*"
+                  autocomplete="off"></ion-input>
               </ion-item>
               <div class="actions__row">
                 <ion-button type="button" fill="outline" size="small" (click)="refreshChallenge()">
@@ -110,7 +86,7 @@
                 placeholder="mycelium-operator"></ion-input>
             </ion-item>
             <div class="actions__row">
-              <ion-button type="submit" [disabled]="mineForm.invalid || mining()">
+              <ion-button type="submit" [disabled]="mineForm.controls.miner.invalid || mining() || !isChallengeSolved()">
                 {{ mining() ? 'Mining...' : 'Mine block' }}
               </ion-button>
               <ion-spinner *ngIf="mining()" name="crescent"></ion-spinner>
@@ -196,4 +172,37 @@
     color="dark"
     (didDismiss)="toastMessage.set(null)">
   </ion-toast>
+
+  <ion-modal [isOpen]="guideOpen()" (didDismiss)="closeGuide()" class="guide-modal">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Guide</ion-title>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="closeGuide()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="guide-modal__content">
+      <div class="guide-modal__body">
+        <div class="section">
+          <h3>How to use</h3>
+          <ul class="guide__list">
+            <li>Queue one or more transactions.</li>
+            <li>Solve the mining challenge.</li>
+            <li>Mine a block to seal the queue.</li>
+            <li>Inspect hashes, nonce, and links.</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h3>What it teaches</h3>
+          <ul class="guide__list">
+            <li>Blocks link by previous hash.</li>
+            <li>Proof of work searches for a valid nonce.</li>
+            <li>Rewards create new supply.</li>
+            <li>Changing data breaks validation.</li>
+          </ul>
+        </div>
+      </div>
+    </ion-content>
+  </ion-modal>
 </ion-content>
