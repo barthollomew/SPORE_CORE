@@ -198,10 +198,10 @@ export class DashboardPage {
 
     const numericValue = Number(trimmed);
     if (!Number.isFinite(numericValue)) {
-      return 'challenge incorrect';
+      return 'incorrect';
     }
 
-    return numericValue === this.challenge().answer ? 'challenge ok' : 'challenge incorrect';
+    return numericValue === this.challenge().answer ? 'correct' : 'incorrect';
   }
 
   openGuide(): void {
