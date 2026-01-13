@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import {
   IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonInput,
   IonItem,
   IonLabel,
+  IonModal,
   IonSpinner,
   IonTitle,
   IonToolbar,
@@ -27,11 +29,13 @@ type MiningChallenge = {
     CommonModule,
     ReactiveFormsModule,
     IonButton,
+    IonButtons,
     IonContent,
     IonHeader,
     IonInput,
     IonItem,
     IonLabel,
+    IonModal,
     IonSpinner,
     IonTitle,
     IonToolbar,
@@ -61,6 +65,7 @@ export class DashboardPage {
   readonly pending = signal<Transaction[]>([]);
   readonly mining = signal(false);
   readonly toastMessage = signal<string | null>(null);
+  readonly guideOpen = signal(false);
   readonly difficulty = this.blockchain.getDifficulty();
   readonly minerReward = this.blockchain.getReward();
   readonly challenge = signal<MiningChallenge>(this.createChallenge());
@@ -99,12 +104,13 @@ export class DashboardPage {
       return;
     }
 
-    if (this.mineForm.invalid) {
-      this.mineForm.markAllAsTouched();
+    if (this.mineForm.controls.miner.invalid) {
+      this.mineForm.controls.miner.markAsTouched();
       return;
     }
 
     if (!this.isChallengeSolved()) {
+      this.mineForm.controls.solution.markAsTouched();
       this.showToast('Incorrect solution. New challenge issued.');
       this.resetChallenge();
       return;
@@ -172,7 +178,7 @@ export class DashboardPage {
 
   isChallengeSolved(): boolean {
     const rawValue = this.mineForm.controls.solution.value;
-    const trimmed = rawValue.trim();
+    const trimmed = String(rawValue ?? '').trim();
 
     if (!trimmed) {
       return false;
@@ -184,7 +190,7 @@ export class DashboardPage {
 
   challengeStatusMessage(): string {
     const rawValue = this.mineForm.controls.solution.value;
-    const trimmed = rawValue.trim();
+    const trimmed = String(rawValue ?? '').trim();
 
     if (!trimmed) {
       return '';
@@ -196,6 +202,14 @@ export class DashboardPage {
     }
 
     return numericValue === this.challenge().answer ? 'challenge ok' : 'challenge incorrect';
+  }
+
+  openGuide(): void {
+    this.guideOpen.set(true);
+  }
+
+  closeGuide(): void {
+    this.guideOpen.set(false);
   }
 
   refreshChallenge(): void {
