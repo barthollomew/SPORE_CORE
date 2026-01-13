@@ -1,5 +1,7 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   color: var(--ion-text-color);
   --page-bg: #010701;
   --panel-bg: #041304;
@@ -439,13 +441,13 @@ ion-toast {
   --border-width: 1px;
 }
 
-ion-content::part(scroll) {
+.page::part(scroll) {
   display: flex;
   flex-direction: column;
-  height: 100%;
   overflow: hidden;
   overscroll-behavior: contain;
   padding: 0;
+  min-height: 0;
 }
 
 @media (max-width: 900px) {
@@ -475,7 +477,7 @@ ion-content::part(scroll) {
     overflow: visible;
   }
 
-  ion-content::part(scroll) {
+  .page::part(scroll) {
     height: auto;
     overflow-y: auto;
   }
