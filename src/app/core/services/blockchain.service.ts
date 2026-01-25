@@ -53,16 +53,30 @@ export class BlockchainService {
   }
 
   queueTransaction(transaction: Omit<Transaction, 'id' | 'timestamp'>): Transaction {
+    const trimmedSender = transaction.sender.trim();
+    const trimmedReceiver = transaction.receiver.trim();
+    const trimmedNote = transaction.note?.trim();
+
+    if (!trimmedSender) {
+      throw new Error('Sender is required.');
+    }
+
+    if (!trimmedReceiver) {
+      throw new Error('Receiver is required.');
+    }
+
     const numericAmount = Number(transaction.amount);
     if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
       throw new Error('Amount must be greater than zero.');
     }
 
     const record: Transaction = {
-      ...transaction,
+      sender: trimmedSender,
+      receiver: trimmedReceiver,
       amount: numericAmount,
       id: this.createId(),
       timestamp: Date.now(),
+      note: trimmedNote ? trimmedNote : undefined,
     };
 
     this.pendingTransactions = [...this.pendingTransactions, record];
