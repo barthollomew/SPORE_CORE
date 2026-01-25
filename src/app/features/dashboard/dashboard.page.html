@@ -3,8 +3,8 @@
     <ion-title>SPORE_CORE</ion-title>
     <div class="header__status" slot="end">
       <span class="status">DIFF {{ difficulty }}</span>
-      <span class="status" [class.status--bad]="!chainIsHealthy()">
-        {{ chainIsHealthy() ? 'CHAIN OK' : 'CHAIN BAD' }}
+      <span class="status" [class.status--bad]="!chainHealthy()">
+        {{ chainHealthy() ? 'CHAIN OK' : 'CHAIN BAD' }}
       </span>
       <ion-button size="small" fill="outline" (click)="openGuide()">Guide</ion-button>
     </div>

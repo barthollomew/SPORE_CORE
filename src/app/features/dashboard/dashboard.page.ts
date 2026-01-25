@@ -63,6 +63,7 @@ export class DashboardPage {
 
   readonly chain = signal<Block[]>([]);
   readonly pending = signal<Transaction[]>([]);
+  readonly chainHealthy = signal(true);
   readonly mining = signal(false);
   readonly toastMessage = signal<string | null>(null);
   readonly guideOpen = signal(false);
@@ -172,10 +173,6 @@ export class DashboardPage {
     return tx.id;
   }
 
-  chainIsHealthy(): boolean {
-    return this.blockchain.isValid();
-  }
-
   isChallengeSolved(): boolean {
     const rawValue = this.mineForm.controls.solution.value;
     const trimmed = String(rawValue ?? '').trim();
@@ -219,6 +216,7 @@ export class DashboardPage {
   private refresh(): void {
     this.chain.set(this.blockchain.getChain());
     this.pending.set(this.blockchain.getPendingTransactions());
+    this.chainHealthy.set(this.blockchain.isValid());
   }
 
   private showToast(message: string): void {
